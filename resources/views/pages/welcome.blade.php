@@ -4,7 +4,7 @@
 @section('title', 'Homepage')
 
 @section('content')
-      <div class="row">
+      <!--<div class="row">
         <div class="col-md-12">
           <div class="jumbotron">
             <h1>Welcome to My Blog!</h1>
@@ -12,7 +12,7 @@
             <p><a class="btn btn-primary btn-lg" href="#" role="button">Popular Post</a></p>
           </div>
         </div>
-      </div>
+      </div>-->
       <!-- end of header .row -->
 
       <div class="row">
@@ -20,7 +20,15 @@
           @foreach($posts as $post)
             <div class="post">
               <h3>{{ $post->title }}</h3>
-              <p>{{ substr($post->body, 0, 300) }}{{ strlen($post->body) > 50 ? "..." : "" }}</p>
+              <p class="post-date">
+                {{ date('F nS, Y', strtotime($post->created_at)) }}   
+              </p>
+
+              <div class="post-comments">
+                <span class="glyphicon glyphicon-comment"></span> {{ $post->comments->count() . ' Comment(s)'}}
+              </div>
+              <img src="{{ asset('images/' . $post->image) }}" alt="" height="400" style="width:100%;">
+              <p>{{ substr(strip_tags($post->body), 0, 300) }}{{ strlen(strip_tags($post->body)) > 50 ? "..." : "" }}</p>
               <a href="{{ url('blog/' . $post->slug) }}" class="btn btn-primary">Read More</a>
             </div>
 
